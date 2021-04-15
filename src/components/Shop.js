@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProducts } from '../actions/productsAction';
+import Header from './Header';
+import Footer from './Footer';
 
 class Shop extends Component {
 
@@ -21,6 +23,7 @@ class Shop extends Component {
     if(this.props.products.length) {
       return (
         <div>
+         <Header />
           <h4>Articles</h4>
           {this.props.products.map(product => {
             return (
@@ -31,6 +34,7 @@ class Shop extends Component {
               </div>
             );
           })}
+         <Footer /> 
         </div>
       )    
     } else {
