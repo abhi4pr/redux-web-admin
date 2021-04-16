@@ -8,13 +8,16 @@ export default class MyAccount extends Component {
     super(props);
 
     this.state = {
-
+      getValue:[],
     }; 
     this.shoot = this.shoot.bind(this)
   }   
 
     componentDidMount() {
-      let getValue = localStorage.getItem("userData");       
+      let getValue = localStorage.getItem("userData");     
+      this.setState({ 
+        getValue: JSON.parse(getValue), 
+      });   
     }
 
     shoot() {
@@ -75,8 +78,7 @@ export default class MyAccount extends Component {
                                       <h3>Dashboard</h3>
 
                                       <div class="welcome mb-20">
-                                          <p>Hello, <strong></strong> (If Not <strong>Tuntuni !</strong><a
-                                                  href="login-register.html" class="logout"> Logout</a>)</p>
+                                          <p>Hello, <strong>{this.state.getValue.name}</strong></p>
                                       </div>
 
                                       <p class="mb-0">From your account dashboard. you can easily check &amp; view your
@@ -144,23 +146,23 @@ export default class MyAccount extends Component {
                                           <form action="#">
                                             <div class="row">
                                                 <div class="col-lg-6 col-12 mb-30">
-                                                    <input id="first-name" name="name" type="text" />
+                                                    <input id="first-name" name="name" type="text" value={this.state.getValue.name}/>
                                                 </div>
 
                                                 <div class="col-lg-6 col-12 mb-30">
-                                                    <input id="last-name" name="email" type="email" />
+                                                    <input id="last-name" name="email" type="email"  value={this.state.getValue.email}/>
                                                 </div>
 
                                                 <div class="col-12 mb-30">
-                                                    <input id="display-name" name="password" type="password" />
+                                                    <input id="display-name" name="password" type="password" value={this.state.getValue.password}/>
                                                 </div>
 
                                                 <div class="col-12 mb-30">
-                                                    <input id="email" name="address" type="text" />
+                                                    <input id="email" name="address" type="text" value={this.state.getValue.address}/>
                                                 </div>
 
                                                 <div class="col-12 mb-30">
-                                                    <input id="current-pwd" name="number" type="text" />
+                                                    <input id="current-pwd" name="number" type="text" value={this.state.getValue.number}/>
                                                 </div>
 
                                                 <div class="col-12">

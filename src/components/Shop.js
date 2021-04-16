@@ -98,9 +98,9 @@ class Shop extends Component {
                                               <div class="card-body">
                                                   <div class="product-thumbnail position-relative">
                                                       <span class="badge badge-danger top-right">New</span>
-                                                      <a href="/productinfo/${product._id}">
+                                                      <Link to={`/productinfo/${product._id}`}>
                                                           <img class="first-img" src="assets/img/product/1.jpg" alt="thumbnail" />
-                                                      </a>
+                                                      </Link>
                                                       
                                                       <ul class="product-links d-flex justify-content-center">
                                                           <li>
