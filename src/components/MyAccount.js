@@ -9,8 +9,17 @@ export default class MyAccount extends Component {
 
     this.state = {
 
-    };
+    }; 
+    this.shoot = this.shoot.bind(this)
   }   
+
+    componentDidMount() {
+      let getValue = localStorage.getItem("userData");       
+    }
+
+    shoot() {
+      localStorage.removeItem("userData");
+    }
 
   render() {
       return (
@@ -44,38 +53,29 @@ export default class MyAccount extends Component {
                       
                       <div class="col-lg-3 col-12 mb-30">
                           <div class="myaccount-tab-menu nav" role="tablist">
-                              <a href="#dashboad" data-toggle="tab"><i class="fas fa-tachometer-alt"></i>
+                              <a href="#dashboad" data-toggle="tab" class="active"><i class="fas fa-tachometer-alt"></i>
                                   Dashboard</a>
 
                               <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i>
                                   Orders</a>
 
-                              <a href="#download" data-toggle="tab"><i class="fas fa-cloud-download-alt"></i>
-                                  Download</a>
-
-                              <a href="#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i>
-                                  Payment
-                                  Method</a>
-
-                              <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i>
-                                  address</a>
-
-                              <a href="#account-info" data-toggle="tab" class="active"><i class="fa fa-user"></i> Account
+                              <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account
                                   Details</a>
 
-                              <a href="login.html"><i class="fa fa-sign-out"></i> Logout</a>
+                              <a onClick={this.shoot}><i class="fa fa-sign-out"></i> Logout</a>
+                              
                           </div>
                       </div>
                       
                       <div class="col-lg-9 col-12 mb-30">
                           <div class="tab-content" id="myaccountContent">
                               
-                              <div class="tab-pane fade" id="dashboad" role="tabpanel">
+                              <div class="tab-pane fade active show" id="dashboad" role="tabpanel">
                                   <div class="myaccount-content">
                                       <h3>Dashboard</h3>
 
                                       <div class="welcome mb-20">
-                                          <p>Hello, <strong>Alex Tuntuni</strong> (If Not <strong>Tuntuni !</strong><a
+                                          <p>Hello, <strong></strong> (If Not <strong>Tuntuni !</strong><a
                                                   href="login-register.html" class="logout"> Logout</a>)</p>
                                       </div>
 
@@ -136,109 +136,39 @@ export default class MyAccount extends Component {
                                   </div>
                               </div>
                               
-                              <div class="tab-pane fade" id="download" role="tabpanel">
-                                  <div class="myaccount-content">
-                                      <h3>Downloads</h3>
-
-                                      <div class="myaccount-table table-responsive text-center">
-                                          <table class="table table-bordered">
-                                              <thead class="thead-light">
-                                                  <tr>
-                                                      <th>Product</th>
-                                                      <th>Date</th>
-                                                      <th>Expire</th>
-                                                      <th>Download</th>
-                                                  </tr>
-                                              </thead>
-
-                                              <tbody>
-                                                  <tr>
-                                                      <td>Mostarizing Oil</td>
-                                                      <td>Aug 22, 2018</td>
-                                                      <td>Yes</td>
-                                                      <td><a href="#" class="ht-btn black-btn">Download File</a></td>
-                                                  </tr>
-                                                  <tr>
-                                                      <td>Katopeno Altuni</td>
-                                                      <td>Sep 12, 2018</td>
-                                                      <td>Never</td>
-                                                      <td><a href="#" class="ht-btn black-btn">Download File</a></td>
-                                                  </tr>
-                                              </tbody>
-                                          </table>
-                                      </div>
-                                  </div>
-                              </div>
-                             
-                              <div class="tab-pane fade" id="payment-method" role="tabpanel">
-                                  <div class="myaccount-content">
-                                      <h3>Payment Method</h3>
-
-                                      <p class="saved-message">You Can't Saved Your Payment Method yet.</p>
-                                  </div>
-                              </div>
-                              
-                              <div class="tab-pane fade" id="address-edit" role="tabpanel">
-                                  <div class="myaccount-content">
-                                      <h3>Billing Address</h3>
-
-                                      <address>
-                                          <p><strong>Alex Tuntuni</strong></p>
-                                          <p>1355 Market St, Suite 900 <br />
-                                              San Francisco, CA 94103</p>
-                                          <p>Mobile: (123) 456-7890</p>
-                                      </address>
-
-                                      <a href="#" class="ht-btn black-btn d-inline-block edit-address-btn"><i
-                                              class="fa fa-edit"></i>Edit Address</a>
-                                  </div>
-                              </div>
-                              
-                              <div class="tab-pane fade active show" id="account-info" role="tabpanel">
+                              <div class="tab-pane fade" id="account-info" role="tabpanel">
                                   <div class="myaccount-content">
                                       <h3>Account Details</h3>
 
                                       <div class="account-details-form">
                                           <form action="#">
-                                              <div class="row">
-                                                  <div class="col-lg-6 col-12 mb-30">
-                                                      <input id="first-name" placeholder="First Name" type="text" />
-                                                  </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-12 mb-30">
+                                                    <input id="first-name" name="name" type="text" />
+                                                </div>
 
-                                                  <div class="col-lg-6 col-12 mb-30">
-                                                      <input id="last-name" placeholder="Last Name" type="text" />
-                                                  </div>
+                                                <div class="col-lg-6 col-12 mb-30">
+                                                    <input id="last-name" name="email" type="email" />
+                                                </div>
 
-                                                  <div class="col-12 mb-30">
-                                                      <input id="display-name" placeholder="Display Name" type="text" />
-                                                  </div>
+                                                <div class="col-12 mb-30">
+                                                    <input id="display-name" name="password" type="password" />
+                                                </div>
 
-                                                  <div class="col-12 mb-30">
-                                                      <input id="email" placeholder="Email Address" type="email" />
-                                                  </div>
+                                                <div class="col-12 mb-30">
+                                                    <input id="email" name="address" type="text" />
+                                                </div>
 
-                                                  <div class="col-12 mb-30">
-                                                      <h4>Password change</h4>
-                                                  </div>
+                                                <div class="col-12 mb-30">
+                                                    <input id="current-pwd" name="number" type="text" />
+                                                </div>
 
-                                                  <div class="col-12 mb-30">
-                                                      <input id="current-pwd" placeholder="Current Password" type="password" />
-                                                  </div>
+                                                <div class="col-12">
+                                                    <button class="btn theme-btn--dark1 btn--md">Save
+                                                        Changes</button>
+                                                </div>
 
-                                                  <div class="col-lg-6 col-12 mb-30">
-                                                      <input id="new-pwd" placeholder="New Password" type="password" />
-                                                  </div>
-
-                                                  <div class="col-lg-6 col-12 mb-30">
-                                                      <input id="confirm-pwd" placeholder="Confirm Password" type="password" />
-                                                  </div>
-
-                                                  <div class="col-12">
-                                                      <button class="btn theme-btn--dark1 btn--md">Save
-                                                          Changes</button>
-                                                  </div>
-
-                                              </div>
+                                            </div>
                                           </form>
                                       </div>
                                   </div>

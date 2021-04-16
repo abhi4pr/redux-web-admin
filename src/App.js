@@ -28,6 +28,7 @@ class App extends Component {
         <Route exact path="/contactus" component={ContactUs} />
         <Route exact path="/productinfo/:id" component={ProductInfo} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/myaccount" component={MyAccount} />
       </Router>
     );
