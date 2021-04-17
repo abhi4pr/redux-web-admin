@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Router, Route} from 'react-router-dom'
+import {Router, Route} from 'react-router-dom';
 import history from './history';
 import Shop from './components/Shop';
 import ProductInfo from './components/ProductInfo';
@@ -10,6 +10,7 @@ import ContactUs from './components/ContactUs';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import MyAccount from './components/MyAccount';
+import PrivateRoute from './components/PrivateRoute';
 
 class App extends Component {
 	
@@ -17,7 +18,7 @@ class App extends Component {
       super(props);    
       this.state = {
 
-      }  
+      }   
   }  
 
   render() {
@@ -31,7 +32,7 @@ class App extends Component {
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/logout" component={Logout} />
-        <Route exact path="/myaccount" component={MyAccount} />
+        <PrivateRoute exact path="/myaccount" component={MyAccount} />
       </Router>
     );
   }
