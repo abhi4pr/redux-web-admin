@@ -8,6 +8,7 @@ import Home from './components/Home';
 import AboutUs from './components/AboutUs';
 import ContactUs from './components/ContactUs';
 import Login from './components/Login';
+import Logout from './components/Logout';
 import MyAccount from './components/MyAccount';
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
         <Route exact path="/productinfo/:id" component={ProductInfo} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/logout" component={Logout} />
         <Route exact path="/myaccount" component={MyAccount} />
       </Router>
     );

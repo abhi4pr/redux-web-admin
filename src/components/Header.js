@@ -30,21 +30,15 @@ export default class Header extends Component {
                                 <ul class="d-flex justify-content-center justify-content-md-end align-items-center">
                                     
                                     <li class="english">
-                                        <a href="#" id="dropdown3" class="pr-0" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <img src="assets/img/logo/us-flag.jpg" alt="us flag" /> English
-                                            <i class="ion ion-ios-arrow-down"></i>
-                                        </a>
-                                        <ul class="topnav-submenu dropdown-menu" aria-labelledby="dropdown3">
-                                            <li class="active">
-                                                <a href="#"><img src="assets/img/logo/us-flag.jpg" alt="us flag" />
-                                                    English</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><img src="assets/img/logo/france.jpg" alt="france flag" />
-                                                    Français</a>
-                                            </li>
-                                        </ul>
+                                      {localStorage.getItem('userData') ? 
+                                        <Link to={`/logout`}>
+                                            <img src="assets/img/logo/us-flag.jpg" alt="us flag" />Logout
+                                        </Link> :
+                                        <Link to={`/login`}>                                        
+                                            <img src="assets/img/logo/us-flag.jpg" alt="us flag" />Login                                        
+                                        </Link>
+                                      }                                        
+                                        
                                     </li>
                                 </ul>
                             </nav>
