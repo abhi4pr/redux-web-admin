@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import { updateUser } from '../actions/userAction';
+import { connect } from 'react-redux';
 
-export default class MyAccount extends Component {
+class MyAccount extends Component {
 
   constructor(props) {
     super(props);
@@ -13,16 +15,32 @@ export default class MyAccount extends Component {
     this.shoot = this.shoot.bind(this)
   }   
 
-    componentDidMount() {
-      let getValue = localStorage.getItem("userData");     
-      this.setState({ 
-        getValue: JSON.parse(getValue), 
-      });   
-    }
+  componentDidMount() {
+    let getValue = localStorage.getItem("userData");     
+    this.setState({ 
+      getValue: JSON.parse(getValue), 
+    });   
+  }
 
-    shoot() {
-      localStorage.removeItem("userData");
-    }
+  shoot() {
+    localStorage.removeItem("userData");
+  }
+
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const id = this.state.getValue._id;
+    const name = this.state.name ? this.state.name : this.state.getValue.name;
+    const password = this.state.password ? this.state.password : this.state.getValue.password;
+    const address = this.state.address ? this.state.address : this.state.getValue.address;
+    const number = this.state.number ? this.state.number : this.state.getValue.number;
+    const UpdateData = {id: id, name: name, password: password, address: address, number:number}
+    this.props.updateUser(UpdateData);
+    console.log("*****",UpdateData);
+  };
 
   render() {
       return (
@@ -143,26 +161,26 @@ export default class MyAccount extends Component {
                                       <h3>Account Details</h3>
 
                                       <div class="account-details-form">
-                                          <form action="#">
+                                          <form onSubmit={ this.handleSubmit }>
                                             <div class="row">
                                                 <div class="col-lg-6 col-12 mb-30">
-                                                    <input id="first-name" name="name" type="text" value={this.state.getValue.name}/>
+                                                    <input id="first-name" name="name" type="text" defaultValue={this.state.getValue.name} onChange={this.handleChange}/>
                                                 </div>
 
                                                 <div class="col-lg-6 col-12 mb-30">
-                                                    <input id="last-name" name="email" type="email"  value={this.state.getValue.email}/>
+                                                    <input id="last-name" name="email" type="email"  defaultValue={this.state.getValue.email} onChange={this.handleChange}/>
                                                 </div>
 
                                                 <div class="col-12 mb-30">
-                                                    <input id="display-name" name="password" type="password" value={this.state.getValue.password}/>
+                                                    <input id="display-name" name="password" type="password" defaultValue={this.state.getValue.password} onChange={this.handleChange}/>
                                                 </div>
 
                                                 <div class="col-12 mb-30">
-                                                    <input id="email" name="address" type="text" value={this.state.getValue.address}/>
+                                                    <input id="email" name="address" type="text" defaultValue={this.state.getValue.address} onChange={this.handleChange}/>
                                                 </div>
 
                                                 <div class="col-12 mb-30">
-                                                    <input id="current-pwd" name="number" type="text" value={this.state.getValue.number}/>
+                                                    <input id="current-pwd" name="number" type="text" defaultValue={this.state.getValue.number} onChange={this.handleChange}/>
                                                 </div>
 
                                                 <div class="col-12">
@@ -187,3 +205,7 @@ export default class MyAccount extends Component {
       )    
   }
 }
+
+const mapDispatchToProps = {updateUser};
+
+export default connect(null, mapDispatchToProps)(MyAccount);
