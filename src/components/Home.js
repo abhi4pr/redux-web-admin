@@ -181,7 +181,7 @@ class Home extends Component {
                         return ( 
                         <div class="col-md-3" key={blog._id}>
                             <div class="single-blog">
-                                <Link to={`/singleblog/${blog._id}`} className="blog-thumb mb-20 zoom-in d-block overflow-hidden">
+                                <Link to={`/bloginfo/${blog._id}`} className="blog-thumb mb-20 zoom-in d-block overflow-hidden">
                                     <img src="assets/img/blog-post/1.jpg" alt="blog-thumb-naile" />
                                 </Link>
                                 <div class="blog-post-content">

@@ -11,6 +11,8 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import MyAccount from './components/MyAccount';
 import PrivateRoute from './PrivateRoute';
+import BlogInfo from './components/BlogInfo';
+import Blogs from './components/Blogs';
 
 class App extends Component {
 	
@@ -32,6 +34,8 @@ class App extends Component {
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/logout" component={Logout} />
+        <Route exact path="/bloginfo/:id" component={BlogInfo} />
+        <Route exact path="/blogs" component={Blogs} />
         <PrivateRoute exact path="/myaccount" component={MyAccount} />
       </Router>
     );
