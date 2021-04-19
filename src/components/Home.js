@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import { connect } from 'react-redux';
+import { getBlogs, getProducts } from '../actions/productsAction';
 
-export default class Home extends Component {
+class Home extends Component {
 
   constructor(props) {
     super(props);
@@ -11,10 +13,16 @@ export default class Home extends Component {
     this.state = {
 
     };
+  }
+
+  componentDidMount() {
+    this.props.dispatch(getBlogs());
+    this.props.dispatch(getProducts());
   }   
 
   render() {
-    return (
+    if(this.props.blogs.length && this.props.products.length) {
+      return (
         <div>
            <Header /> 
             
@@ -64,6 +72,8 @@ export default class Home extends Component {
                     </div>
                     
                     <div class="row">
+                      {this.props.products.map(product => {
+                        return (   
                         <div class="col-md-3">
                            <div class="product-list">
                                 <div class="card product-card">
@@ -72,37 +82,14 @@ export default class Home extends Component {
                                             <div class="product-thumbnail position-relative">
                                                 <span class="badge badge-success top-left">-10%</span>
                                                 <span class="badge badge-danger top-right">New</span>
-                                                <a href="single-product.html">
-                                                    <img class="first-img" src="assets/img/product/6.jpg"
-                                                        alt="thumbnail" />
-                                                </a>
-                                                
-                                                <ul class="product-links d-flex justify-content-center">
-                                                    <li>
-                                                        <a href="wishlist.html">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="add to wishlist" class="icon-heart"> </span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#compare">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="Add to compare" class="icon-shuffle"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#quick-view">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="Quick view" class="icon-magnifier"></span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                                <Link to={`/productinfo/${product._id}`}>
+                                                  <img class="first-img" src="assets/img/product/1.jpg" alt="thumbnail" />
+                                                </Link>
                                                
                                             </div>
                                             <div class="media-body">
                                                 <div class="product-desc">
-                                                    <h3 class="title"><a href="shop-grid-4-column.html">New Balance
-                                                            Running Arishi trainers in triple</a></h3>
+                                                    <h3 class="title"><a href="shop-grid-4-column.html">{product.pname}</a></h3>
                                                     <div class="star-rating">
                                                         <span class="ion-ios-star"></span>
                                                         <span class="ion-ios-star"></span>
@@ -112,10 +99,9 @@ export default class Home extends Component {
                                                     </div>
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <h6 class="product-price"><del class="del">$23.90</del>
-                                                            <span class="onsale">$21.51</span></h6>
+                                                            <span class="onsale">Rs.{product.pprice}</span></h6>
                                                         <button class="pro-btn" data-toggle="modal"
-                                                            data-target="#add-to-cart"><i
-                                                                class="icon-basket"></i></button>
+                                                            data-target="#add-to-cart"><i class="icon-basket"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -124,186 +110,8 @@ export default class Home extends Component {
                                 </div>                                                
                            </div> 
                         </div>
-                        <div class="col-md-3">
-                           <div class="product-list">
-                                <div class="card product-card">
-                                    <div class="card-body p-0">
-                                        <div class="media flex-column">
-                                            <div class="product-thumbnail position-relative">
-                                                <span class="badge badge-success top-left">-10%</span>
-                                                <span class="badge badge-danger top-right">New</span>
-                                                <a href="single-product.html">
-                                                    <img class="first-img" src="assets/img/product/6.jpg"
-                                                        alt="thumbnail" />
-                                                </a>
-                                                
-                                                <ul class="product-links d-flex justify-content-center">
-                                                    <li>
-                                                        <a href="wishlist.html">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="add to wishlist" class="icon-heart"> </span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#compare">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="Add to compare" class="icon-shuffle"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#quick-view">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="Quick view" class="icon-magnifier"></span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                               
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="product-desc">
-                                                    <h3 class="title"><a href="shop-grid-4-column.html">New Balance
-                                                            Running Arishi trainers in triple</a></h3>
-                                                    <div class="star-rating">
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star de-selected"></span>
-                                                    </div>
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <h6 class="product-price"><del class="del">$23.90</del>
-                                                            <span class="onsale">$21.51</span></h6>
-                                                        <button class="pro-btn" data-toggle="modal"
-                                                            data-target="#add-to-cart"><i
-                                                                class="icon-basket"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>                                                
-                           </div> 
-                        </div>
-                        <div class="col-md-3">
-                           <div class="product-list">
-                                <div class="card product-card">
-                                    <div class="card-body p-0">
-                                        <div class="media flex-column">
-                                            <div class="product-thumbnail position-relative">
-                                                <span class="badge badge-success top-left">-10%</span>
-                                                <span class="badge badge-danger top-right">New</span>
-                                                <a href="single-product.html">
-                                                    <img class="first-img" src="assets/img/product/6.jpg"
-                                                        alt="thumbnail" />
-                                                </a>
-                                                
-                                                <ul class="product-links d-flex justify-content-center">
-                                                    <li>
-                                                        <a href="wishlist.html">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="add to wishlist" class="icon-heart"> </span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#compare">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="Add to compare" class="icon-shuffle"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#quick-view">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="Quick view" class="icon-magnifier"></span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                               
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="product-desc">
-                                                    <h3 class="title"><a href="shop-grid-4-column.html">New Balance
-                                                            Running Arishi trainers in triple</a></h3>
-                                                    <div class="star-rating">
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star de-selected"></span>
-                                                    </div>
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <h6 class="product-price"><del class="del">$23.90</del>
-                                                            <span class="onsale">$21.51</span></h6>
-                                                        <button class="pro-btn" data-toggle="modal"
-                                                            data-target="#add-to-cart"><i
-                                                                class="icon-basket"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>                                                
-                           </div> 
-                        </div>
-                        <div class="col-md-3">
-                           <div class="product-list">
-                                <div class="card product-card">
-                                    <div class="card-body p-0">
-                                        <div class="media flex-column">
-                                            <div class="product-thumbnail position-relative">
-                                                <span class="badge badge-success top-left">-10%</span>
-                                                <span class="badge badge-danger top-right">New</span>
-                                                <a href="single-product.html">
-                                                    <img class="first-img" src="assets/img/product/6.jpg"
-                                                        alt="thumbnail" />
-                                                </a>
-                                                
-                                                <ul class="product-links d-flex justify-content-center">
-                                                    <li>
-                                                        <a href="wishlist.html">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="add to wishlist" class="icon-heart"> </span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#compare">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="Add to compare" class="icon-shuffle"></span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#quick-view">
-                                                            <span data-toggle="tooltip" data-placement="bottom"
-                                                                title="Quick view" class="icon-magnifier"></span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                               
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="product-desc">
-                                                    <h3 class="title"><a href="shop-grid-4-column.html">New Balance
-                                                            Running Arishi trainers in triple</a></h3>
-                                                    <div class="star-rating">
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star"></span>
-                                                        <span class="ion-ios-star de-selected"></span>
-                                                    </div>
-                                                    <div class="d-flex align-items-center justify-content-between">
-                                                        <h6 class="product-price"><del class="del">$23.90</del>
-                                                            <span class="onsale">$21.51</span></h6>
-                                                        <button class="pro-btn" data-toggle="modal"
-                                                            data-target="#add-to-cart"><i
-                                                                class="icon-basket"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>                                                
-                           </div> 
-                        </div>
+                      );
+                      })}  
                     </div>
                 </div>
             </section>
@@ -369,76 +177,24 @@ export default class Home extends Component {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-
+                       {this.props.blogs.map(blog => {
+                        return ( 
+                        <div class="col-md-3" key={blog._id}>
                             <div class="single-blog">
-                                <a class="blog-thumb mb-20 zoom-in d-block overflow-hidden"
-                                    href="blog-grid-left-sidebar.html">
+                                <Link to={`/singleblog/${blog._id}`} className="blog-thumb mb-20 zoom-in d-block overflow-hidden">
                                     <img src="assets/img/blog-post/1.jpg" alt="blog-thumb-naile" />
-                                </a>
+                                </Link>
                                 <div class="blog-post-content">
-                                    <a class="blog-link theme-color d-inline-block mb-10 text-uppercase"
-                                        href="https://themeforest.net/user/hastech">Fashion</a>
-                                    <h3 class="title text-capitalize mb-15"><a href="single-blog.html">This is first
-                                            Post For XipBlog</a></h3>
+                                    <a class="blog-link theme-color d-inline-block mb-10 text-uppercase" href="#">Fashion</a>
+                                    <h3 class="title text-capitalize mb-15"><a href="single-blog.html">{blog.aname}</a></h3>
                                     <h5 class="sub-title"> Posted by <a class="blog-link theme-color d-inline-block mx-1"
-                                            href="https://themeforest.net/user/hastech">HasTech</a>31TH Aug 2020</h5>
+                                            href="#">Admin</a>{blog.created_on}</h5>
 
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3">        
-                            <div class="single-blog">
-                                <a class="blog-thumb mb-20 zoom-in d-block overflow-hidden"
-                                    href="blog-grid-left-sidebar.html">
-                                    <img src="assets/img/blog-post/2.jpg" alt="blog-thumb-naile" />
-                                </a>
-                                <div class="blog-post-content">
-                                    <a class="blog-link theme-color d-inline-block mb-10 text-uppercase"
-                                        href="https://themeforest.net/user/hastech">Fashion</a>
-                                    <h3 class="title text-capitalize mb-15"><a href="single-blog.html">This is Secound
-                                            Post For XipBlog</a></h3>
-                                    <h5 class="sub-title"> Posted by <a class="blog-link theme-color d-inline-block mx-1"
-                                            href="https://themeforest.net/user/hastech">HasTech</a>31TH Aug 2020</h5>
-
-                                </div>
-                            </div>
-                         </div>
-                         <div class="col-md-3">       
-                            <div class="single-blog">
-                                <a class="blog-thumb mb-20 zoom-in d-block overflow-hidden"
-                                    href="blog-grid-left-sidebar.html">
-                                    <img src="assets/img/blog-post/3.jpg" alt="blog-thumb-naile" />
-                                </a>
-                                <div class="blog-post-content">
-                                    <a class="blog-link theme-color d-inline-block mb-10 text-uppercase"
-                                        href="https://themeforest.net/user/hastech">Fashion</a>
-                                    <h3 class="title text-capitalize mb-15"><a href="single-blog.html">This is third
-                                            Post For XipBlog</a></h3>
-                                    <h5 class="sub-title"> Posted by <a class="blog-link theme-color d-inline-block mx-1"
-                                            href="https://themeforest.net/user/hastech">HasTech</a>31TH Aug 2020</h5>
-
-                                </div>
-                            </div>
-                         </div>
-                         <div class="col-md-3">       
-                            <div class="single-blog">
-                                <a class="blog-thumb mb-20 zoom-in d-block overflow-hidden"
-                                    href="blog-grid-left-sidebar.html">
-                                    <img src="assets/img/blog-post/4.jpg" alt="blog-thumb-naile" />
-                                </a>
-                                <div class="blog-post-content">
-                                    <a class="blog-link theme-color d-inline-block mb-10 text-uppercase"
-                                        href="https://themeforest.net/user/hastech">Fashion</a>
-                                    <h3 class="title text-capitalize mb-15"><a href="single-blog.html">This is fourth
-                                            Post For XipBlog</a></h3>
-                                    <h5 class="sub-title"> Posted by <a class="blog-link theme-color d-inline-block mx-1"
-                                            href="https://themeforest.net/user/hastech">HasTech</a>31TH Aug 2020</h5>
-
-                                </div>
-                            </div>
-                                
-                        </div>
+                        </div> 
+                        );
+                       })}                                              
                     </div>
                 </div>
             </section>
@@ -505,6 +261,16 @@ export default class Home extends Component {
            <Footer /> 
         </div>    
       )
-    }
+    } else {
+      return (<div>No Articles</div>)
+    }     
+     
+   }
  }    
  
+const mapStateToProps = (state) => ({
+ blogs: state.blogs,
+ products: state.products
+});
+
+export default connect(mapStateToProps)(Home); 

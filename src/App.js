@@ -10,7 +10,7 @@ import ContactUs from './components/ContactUs';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import MyAccount from './components/MyAccount';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './PrivateRoute';
 
 class App extends Component {
 	
