@@ -39,7 +39,6 @@ class MyAccount extends Component {
     const number = this.state.number ? this.state.number : this.state.getValue.number;
     const UpdateData = {id: id, name: name, password: password, address: address, number:number}
     this.props.updateUser(UpdateData);
-    console.log("*****",UpdateData);
   };
 
   render() {

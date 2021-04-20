@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProducts } from '../actions/productsAction';
+import { addToCart } from '../actions/cartAction';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -11,13 +12,41 @@ class Shop extends Component {
     super(props);
 
     this.state = {
-
+      pid: '',
+      pname: '',
+      pprice: '',
+      pimg: '',
+      qty: '',
+      total_price: ''
     };
   }   
 
   componentDidMount() {
-    this.props.dispatch(getProducts());
+    this.props.getProducts();
+    
+    let getValue = localStorage.getItem("userData");     
+    this.setState({ 
+      getValue: JSON.parse(getValue), 
+    });   
   }
+
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const pid = this.props.products.pid;
+    const pname = this.props.products.pname;
+    const pprice = this.props.products.pprice;
+    const pimg = this.props.products.pimg;
+    const qty = "1";
+    const total_price = this.props.products.total_price;
+    const email = this.state.getValue.email;
+    const CartData = {pid: pid, pname: pname, pprice: pprice, pimg: pimg, qty:qty, total_price:total_price, email:email}
+    this.props.addToCart(CartData);
+    console.log('*******',CartData);
+  };
 
   render() {
     if(this.props.products.length) {
@@ -104,7 +133,7 @@ class Shop extends Component {
                                                       
                                                       <ul class="product-links d-flex justify-content-center">
                                                           <li>
-                                                              <a href="wishlist.html">
+                                                              <a href="#">
                                                                   <span data-toggle="tooltip" data-placement="bottom"
                                                                       title="add to wishlist" class="icon-heart"> </span>
                                                               </a>
@@ -134,9 +163,16 @@ class Shop extends Component {
                                                           <span class="ion-ios-star de-selected"></span>
                                                       </div>
                                                       <div class="d-flex align-items-center justify-content-between">
-                                                          <h6 class="product-price">{product.pprice}</h6>
-                                                          <button class="pro-btn" data-toggle="modal"
-                                                              data-target="#add-to-cart"><i class="icon-basket"></i></button>
+                                                          <h6 class="product-price">Rs. {product.pprice}</h6>
+                                                          <form onSubmit={ this.handleSubmit }>
+                                                            <input type="hidden" onChange={this.handleChange} name="pid" defaultValue={product._id} />  
+                                                            <input type="hidden" onChange={this.handleChange} name="pname" defaultValue={product.pname} />  
+                                                            <input type="hidden" onChange={this.handleChange} name="pprice" defaultValue={product.pprice} />  
+                                                            <input type="hidden" onChange={this.handleChange} name="qty" defaultValue="1" />  
+                                                            <input type="hidden" onChange={this.handleChange} name="pimage" defaultValue={product.pimg} />
+                                                            <input type="hidden" onChange={this.handleChange} name="total_price" defaultValue={product.pprice} />
+                                                            <button type="submit" class="pro-btn"><i class="icon-basket"></i></button>
+                                                          </form> 
                                                       </div>
                                                   </div>
                                               </div>
@@ -219,8 +255,8 @@ class Shop extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
- products: state.products 
-});
+const mapStateToProps = (state) => ({ products: state.products });
 
-export default connect(mapStateToProps)(Shop);
+const mapDispatchToProps = { addToCart, getProducts };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Shop);
