@@ -34,18 +34,17 @@ class Shop extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = (product) => (event) => {
     event.preventDefault();
-    const pid = this.props.products.pid;
-    const pname = this.props.products.pname;
-    const pprice = this.props.products.pprice;
-    const pimg = this.props.products.pimg;
+    const pid = product._id;
+    const pname = product.pname;
+    const pprice = product.pprice;
+    const pimg = product.pimg;
     const qty = "1";
-    const total_price = this.props.products.total_price;
+    const total_price = product.pprice;
     const email = this.state.getValue.email;
     const CartData = {pid: pid, pname: pname, pprice: pprice, pimg: pimg, qty:qty, total_price:total_price, email:email}
     this.props.addToCart(CartData);
-    console.log('*******',CartData);
   };
 
   render() {
@@ -164,7 +163,7 @@ class Shop extends Component {
                                                       </div>
                                                       <div class="d-flex align-items-center justify-content-between">
                                                           <h6 class="product-price">Rs. {product.pprice}</h6>
-                                                          <form onSubmit={ this.handleSubmit }>
+                                                          <form onSubmit={ this.handleSubmit(product) }>
                                                             <input type="hidden" onChange={this.handleChange} name="pid" defaultValue={product._id} />  
                                                             <input type="hidden" onChange={this.handleChange} name="pname" defaultValue={product.pname} />  
                                                             <input type="hidden" onChange={this.handleChange} name="pprice" defaultValue={product.pprice} />  
