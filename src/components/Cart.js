@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { cartItems } from '../actions/cartAction';
 import Header from './Header';
 import Footer from './Footer';
 
-export default class Cart extends Component {
+class Cart extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-
+       email:''
     };
-  }   
+  }
+
+  componentWillMount() {
+    let getValue = localStorage.getItem("userData");     
+    this.setState({ 
+      getValue: JSON.parse(getValue), 
+    }); 
+  }
+
+  componentDidMount() {
+    const emailData = this.state.getValue.email;
+    this.props.cartItems(emailData);
+  }
 
   render() {
       return (
         <div>
-         <Header />
+        <Header />        
             <nav class="breadcrumb-section theme1 bg-lighten2 pt-110 pb-110">
               <div class="container">
                   <div class="row">
@@ -33,8 +48,8 @@ export default class Cart extends Component {
                   </div>
               </div>
             </nav>
-
-            <section class="whish-list-section theme1 pt-80 pb-80">
+            
+             <section class="whish-list-section theme1 pt-80 pb-80">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
@@ -53,25 +68,28 @@ export default class Cart extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                      {this.props.cartDetails.length && this.props.cartDetails.map(share => {
+                                     return ( 
+                                       
+                                        <tr key={share._id}>
                                             <td class="text-center">
-                                                <h3> 789 </h3>
+                                                <p> {share.pid} </p>
                                             </td>
                                             <th class="text-center" scope="row">
-                                                <img src="assets/img/product/2.jpg" alt="img" />
+                                                <img src="assets/img/product/2.jpg" alt="img" height="150px"/>
                                             </th>
                                             <td class="text-center">
-                                                <span class="whish-title">Water and Wind Resistant</span>
+                                                <span class="whish-title">{share.pname}</span>
                                             </td>
                                             <td class="text-center">
                                                 <span class="whish-list-price">
-                                                    $38.24
+                                                    {share.pprice}
                                                 </span>
                                             </td>                                            
                                             <td class="text-center">
                                                 <div class="product-count style">
                                                     <div class="count d-flex justify-content-center">
-                                                        <input type="number" min="1" max="10" step="1" value="1" />
+                                                        <input type="number" min="1" max="10" step="1" value={share.qty} />
                                                         <div class="button-group">
                                                             <button class="count-btn increment"><i
                                                                     class="fas fa-chevron-up"></i></button>
@@ -83,19 +101,28 @@ export default class Cart extends Component {
                                             </td>
                                             <td class="text-center">
                                                 <span class="whish-list-price">
-                                                    $38.24
+                                                    {share.pprice}
                                                 </span>
                                             </td>
-                                        </tr>                                        
+                                        </tr>   
+                                       );
+                                    })}  
+                                                                           
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-         <Footer /> 
+            </section>         
+        <Footer />
         </div>
-      )    
-  }
-}
+      ) 
+    }
+ }    
+
+const mapStateToProps = (state) => ({ cartDetails: state.cartDetails });
+
+const mapDispatchToProps = {cartItems};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Cart); 

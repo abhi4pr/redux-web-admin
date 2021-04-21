@@ -37,7 +37,7 @@ class App extends Component {
         <Route exact path="/logout" component={Logout} />
         <Route exact path="/bloginfo/:id" component={BlogInfo} />
         <Route exact path="/blogs" component={Blogs} />
-        <Route exact path="/cart" component={Cart} />
+        <PrivateRoute exact path="/cart" component={Cart} />
         <PrivateRoute exact path="/myaccount" component={MyAccount} />
       </Router>
     );
