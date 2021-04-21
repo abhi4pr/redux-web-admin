@@ -48,7 +48,6 @@ class Shop extends Component {
   };
 
   render() {
-    if(this.props.products.length) {
       return (
         <div>
          <Header />
@@ -119,7 +118,7 @@ class Shop extends Component {
                               <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                                   aria-labelledby="pills-home-tab">
                                   <div class="row grid-view theme1">
-                                    {this.props.products.map(product => {
+                                    {this.props.products.length && this.props.products.map(product => {
                                      return ( 
                                       <div class="col-sm-6 col-lg-4 col-xl-3 mb-30" key={product._id}>
                                           <div class="card product-card">
@@ -247,10 +246,7 @@ class Shop extends Component {
           </div>
          <Footer /> 
         </div>
-      )
-    } else {
-      return (<div>No Products</div>)
-    }      
+      )     
   }
 }
 

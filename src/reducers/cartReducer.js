@@ -6,7 +6,7 @@ export default function cartReducer(state = initialState, action) {
     case ADD_TO_CART:
     return { 
     	cart: [...state.cart, action.payload] 
-    };  
+    };
     default:
       return state;
   }

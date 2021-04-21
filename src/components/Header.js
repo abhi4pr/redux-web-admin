@@ -1,21 +1,37 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { countCart } from '../actions/counterAction';
 
-export default class Header extends Component {
+class Header extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-
+       email:''
     };
-  }   
+  }
+
+  componentWillMount() {
+    let getValue = localStorage.getItem("userData");     
+    this.setState({ 
+      getValue: JSON.parse(getValue), 
+    }); 
+  }
+
+  componentDidMount() {
+    if(localStorage.getItem("userData")){ 
+        const emailData = this.state.getValue.email;
+        this.props.countCart(emailData);
+    } else {
+
+    }
+  }
 
   render() {
-    return (
-
+      return (
         <header>
-
             <div class="header-top theme1 bg-dark py-15">
                 <div class="container">
                     <div class="row align-items-center">
@@ -71,18 +87,24 @@ export default class Header extends Component {
                                 </div>
                                 
                                 <div class="cart-block-links theme1">
-                                    <ul class="d-flex">
-                                        
+                                    <ul class="d-flex">                                        
                                         <li class="mr-0 cart-block position-relative">
-                                            <a class="offcanvas-toggle" href="#offcanvas-cart">
-                                                <span class="position-relative">
-                                                    <i class="icon-bag"></i>
-                                                    <span class="badge cbdg1">3</span>
-                                                </span>
-                                                <span class="cart-total position-relative">$90.00</span>
+                                            <a class="offcanvas-toggle" href="/cart">
+                                                {localStorage.getItem('userData') ? 
+                                                 <span class="position-relative">
+                                                  <i class="icon-bag"></i>
+                                                   {this.props.cart.length && this.props.cart.map(cartige => {
+                                                     return (
+                                                      <span class="badge cbdg1" key={cartige.well}>{cartige.well}</span>
+                                                     );
+                                                   })}
+                                                 </span> :
+                                                 <Link to={`/login`}>                                        
+                                                    <p>Login To See Cart</p>                                        
+                                                </Link>
+                                                } 
                                             </a>
-                                        </li>
-                                        
+                                        </li>                                        
                                     </ul>
                                 </div>
                                 <div class="mobile-menu-toggle theme1 d-lg-none">
@@ -242,10 +264,14 @@ export default class Header extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
-            
+            </div>            
         </header>
-      )
+      ) 
     }
  }    
- 
+
+const mapStateToProps = (state) => ({ cart: state.cart });
+
+const mapDispatchToProps = {countCart};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header); 
