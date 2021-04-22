@@ -3,6 +3,7 @@ import history from '../history';
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const CART_ITEMS = 'CART_ITEMS';
+export const REMOVE_CART = 'REMOVE_CART';
 
 export const addToCart = ({ pid, pname, pprice, pimg, qty, total_price, email }) => {
   return (dispatch) => {
@@ -26,6 +27,17 @@ export const cartItems = (email) => {
     return axios.get(`http://localhost:4000/api/cartbyid/${email}`)
       .then(response => {
         dispatch({type: CART_ITEMS, cartDetails: response.data});
+      })
+      .catch(error => { throw(error); });
+  };
+};
+
+export const removeCart = (id) => {
+  return (dispatch) => {
+    return axios.delete(`http://localhost:4000/api/removecart/${id}`)
+      .then(response => {
+        const sms = "Cart removed Successfully !"
+        dispatch({type: REMOVE_CART, payload: {sms}})
       })
       .catch(error => { throw(error); });
   };

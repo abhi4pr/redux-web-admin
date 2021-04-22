@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { cartItems } from '../actions/cartAction';
+import { cartItems, removeCart } from '../actions/cartAction';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -26,6 +26,16 @@ class Cart extends Component {
     const emailData = this.state.getValue.email;
     this.props.cartItems(emailData);
   }
+
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  deleteCart = (share) => (event) => {
+    event.preventDefault();
+    const id = share._id;
+    this.props.removeCart(id);
+  };
 
   render() {
       return (
@@ -61,10 +71,10 @@ class Cart extends Component {
                                             <th class="text-center" scope="col">ID</th>
                                             <th class="text-center" scope="col">Product Image</th>
                                             <th class="text-center" scope="col">Product Name</th>
-                                            
                                             <th class="text-center" scope="col">Price</th>
                                             <th class="text-center" scope="col">Qty</th>
                                             <th class="text-center" scope="col">Total Price</th>
+                                            <th class="text-center" scope="col">Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -89,19 +99,18 @@ class Cart extends Component {
                                             <td class="text-center">
                                                 <div class="product-count style">
                                                     <div class="count d-flex justify-content-center">
-                                                        <input type="number" min="1" max="10" step="1" value={share.qty} />
-                                                        <div class="button-group">
-                                                            <button class="count-btn increment"><i
-                                                                    class="fas fa-chevron-up"></i></button>
-                                                            <button class="count-btn decrement"><i
-                                                                    class="fas fa-chevron-down"></i></button>
-                                                        </div>
+                                                        <input type="number" min="1" max="10" step="1" onChange={this.handleChange} value={share.qty} />
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="text-center">
                                                 <span class="whish-list-price">
                                                     {share.pprice}
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="whish-list-price">
+                                                    <button onClick={this.deleteCart(share)} className="btn theme-btn--dark1 btn--md">Delete</button>
                                                 </span>
                                             </td>
                                         </tr>   
@@ -123,6 +132,6 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => ({ cartDetails: state.cartDetails });
 
-const mapDispatchToProps = {cartItems};
+const mapDispatchToProps = {cartItems, removeCart};
 
 export default connect(mapStateToProps,mapDispatchToProps)(Cart); 
