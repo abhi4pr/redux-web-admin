@@ -4,6 +4,7 @@ import history from '../history';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const CART_ITEMS = 'CART_ITEMS';
 export const REMOVE_CART = 'REMOVE_CART';
+export const UPDATE_CART = 'UPDATE_CART';
 
 export const addToCart = ({ pid, pname, pprice, pimg, qty, total_price, email }) => {
   return (dispatch) => {
@@ -38,6 +39,21 @@ export const removeCart = (id) => {
       .then(response => {
         const sms = "Cart removed Successfully !"
         dispatch({type: REMOVE_CART, payload: {sms}})
+      })
+      .catch(error => { throw(error); });
+  };
+};
+
+export const updateCart = (updateData) => {  
+  return (dispatch) => {
+    return axios.put(`http://localhost:4000/api/updtcart/${updateData.cID}`, {pprice:updateData.pprice, qty:updateData.qty})
+      .then(response => {
+        //const data = "Cart Updated !!!";
+        const data = response.data;
+        dispatch({type: UPDATE_CART, payload: {qty: data.qty, total_price: data.total_price, pprice: data.pprice}})
+      })
+      .then(() => {
+        window.location.reload();
       })
       .catch(error => { throw(error); });
   };

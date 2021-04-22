@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { cartItems, removeCart } from '../actions/cartAction';
+import { cartItems, removeCart, updateCart } from '../actions/cartAction';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -11,7 +11,7 @@ class Cart extends Component {
     super(props);
 
     this.state = {
-       email:''
+       
     };
   }
 
@@ -27,8 +27,13 @@ class Cart extends Component {
     this.props.cartItems(emailData);
   }
 
-  handleChange = (event) => {
+  handleChange = (share) => (event) => {
     this.setState({ [event.target.name]: event.target.value });
+    const cID = share._id;
+    const pprice = share.pprice;
+    const qty = 3;
+    const updateData = {cID: cID, pprice: pprice, qty: qty}
+    this.props.updateCart(updateData);
   };
 
   deleteCart = (share) => (event) => {
@@ -99,13 +104,13 @@ class Cart extends Component {
                                             <td class="text-center">
                                                 <div class="product-count style">
                                                     <div class="count d-flex justify-content-center">
-                                                        <input type="number" min="1" max="10" step="1" onChange={this.handleChange} value={share.qty} />
+                                                        <input type="number" onChange={this.handleChange(share)} defaultValue={share.qty} name="qty" min="1" max="10" step="1"/>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="text-center">
                                                 <span class="whish-list-price">
-                                                    {share.pprice}
+                                                    {share.total_price}
                                                 </span>
                                             </td>
                                             <td class="text-center">
@@ -132,6 +137,6 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => ({ cartDetails: state.cartDetails });
 
-const mapDispatchToProps = {cartItems, removeCart};
+const mapDispatchToProps = {cartItems, removeCart, updateCart};
 
 export default connect(mapStateToProps,mapDispatchToProps)(Cart); 
