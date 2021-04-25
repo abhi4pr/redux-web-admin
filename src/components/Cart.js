@@ -31,7 +31,7 @@ class Cart extends Component {
     this.setState({ [event.target.name]: event.target.value });
     const cID = share._id;
     const pprice = share.pprice;
-    const qty = 3;
+    const qty = event.target.value;
     const updateData = {cID: cID, pprice: pprice, qty: qty}
     this.props.updateCart(updateData);
   };
